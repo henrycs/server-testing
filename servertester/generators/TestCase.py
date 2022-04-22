@@ -1,4 +1,4 @@
-from servertester.generators import Entrust, StageInfo, TestAction
+from servertester.generators.entrusts import Entrust, StageInfo, TestAction
 
 class TestCase:
     entrust: Entrust

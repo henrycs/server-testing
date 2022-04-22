@@ -1,5 +1,6 @@
 from servertester.initialize import client, mock_server_load_case_data, mock_server_proceed, print_result
-from generators.entrusts import Entrust, StageInfo, TestAction, TestCase, get_action
+from servertester.generators.entrusts import Entrust, StageInfo, TestAction, get_action
+from servertester.generators.TestCase import TestCase
 
 
 def run_stage(action: TestAction, entrust: Entrust, stage: StageInfo):

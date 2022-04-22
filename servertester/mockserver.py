@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import logging
-from traderclient.transport import get, post_json
+from servertester.sdk.transport import get, post_json
 
 logger = logging.getLogger(__name__)
 

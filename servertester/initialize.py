@@ -1,20 +1,20 @@
 import logging
-from traderclient import *
 from mockserver import MockServer
+from servertester.sdk.client import TradeClient
 
 
 logger = logging.getLogger(__name__)
 
 
 # init Trade Client
-url = "http://192.168.100.130:8000/api/trade/v0.1"
-acct = "myquant_sim_henry1"
-token = "f59e34e1-71bc-46b8-8935-c60a636b9bba"
+url = "http://192.168.100.202:8000/api/trade/v0.1"
+acct = "henry"
+token = "f7f1311d-3bdf-436d-8f98-1236f48600ea"
 client = TradeClient(url, acct, token)
 
 # init Mock server controller
-server_url = "http://192.168.100.130:9001/mock"
-server_acct = '145be423-a021-11ec-8e33-00163e0a4100'
+server_url = "http://192.168.100.202:9001/mock"
+server_acct = 'mockserver'
 server_token = 'ec31c154fc0cbf4ba39eb48689ebcbfaacf8067f'
 server = MockServer(server_url, server_token, server_acct)
 
