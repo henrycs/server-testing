@@ -1,5 +1,5 @@
 import logging
-from servertester.mem_case_test.memtest import run_mem_test_cases
+from servertester.mem_case_test.memtest_0422_complex import run_mem_test_cases
 
 logger = logging.getLogger(__name__)
 
