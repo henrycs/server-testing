@@ -26,6 +26,13 @@ def get_action(action):
         return "entrust_update"
 
 
+def math_round(x: float, digits: int):
+    if x < 0:
+        return int(x * (10**digits) - 0.5) / (10**digits)
+    else:
+        return int(x * (10**digits) + 0.5) / (10**digits)
+
+
 class Entrust:
     code: str
     price: float
@@ -83,6 +90,8 @@ class StageInfo:
         }
 
     def set_trade_result(self, entrust, order_status, price, filled, fees):
+        p = math_round(price, 2)
+        amount = math_round(p * filled, 2)
         self.trade_result = {
             "code": entrust.code,
             "price": entrust.price,
@@ -94,6 +103,7 @@ class StageInfo:
             "eid": entrust.eid,
             "status": order_status,
             "filled": filled,
+            "filled_amount": amount,
             "average_price": price,
             "fees": fees,
             "reason": "",
@@ -101,6 +111,8 @@ class StageInfo:
         }
 
     def set_entrust_update(self, entrust, order_status, price, filled, fees):
+        p = math_round(price, 2)
+        amount = math_round(p * filled, 2)        
         self.entrust_update = {
             "code": entrust.code,
             "price": entrust.price,
@@ -112,6 +124,7 @@ class StageInfo:
             "eid": entrust.eid,
             "status": order_status,
             "filled": filled,
+            "filled_amount": amount,
             "average_price": price,
             "fees": fees,
             "reason": "",
