@@ -105,7 +105,7 @@ class StageInfo:
             "filled": filled,
             "filled_amount": amount,
             "average_price": price,
-            "fees": fees,
+            "trade_fees": fees,
             "reason": "",
             "recv_at": "2022-03-23 09:09:05.000000"
         }
@@ -126,7 +126,7 @@ class StageInfo:
             "filled": filled,
             "filled_amount": amount,
             "average_price": price,
-            "fees": fees,
+            "trade_fees": fees,
             "reason": "",
             "recv_at": "2022-03-23 09:09:05.000000"
         }

@@ -8,7 +8,7 @@
             "name": "Python: App",
             "type": "python",
             "request": "launch",
-            "program": "/home/henry/source/server-testing/servertester/run.py",
+            "program": "/home/app/source/server-testing/servertester/run.py",
             "console": "integratedTerminal",
             "justMyCode": true,
             "env" : {"PYTHONPATH":"${workspaceFolder}"},
