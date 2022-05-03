@@ -85,11 +85,27 @@ def buy_test_case7():
 
 
 
+def buy_test_case21():
+    case1 = TestCase("600519.XSHG", 1828.38, 300, OrderSide.BUY, OrderType.MARKET)
+    case1.add_first_stage(OrderStatus.ALL, 1828.0, 300, 1330.1)
+    run_stages_in_case(case1)
+def buy_test_case22():
+    case1 = TestCase("600519.XSHG", 1828.38, 200, OrderSide.BUY, OrderType.MARKET)
+    case1.add_first_stage(OrderStatus.ALL, 1823.0, 200, 2330.1)
+    run_stages_in_case(case1)
+
+def sell_test_case21():
+    case1 = TestCase("601118.XSHG", 6.6, 1000, OrderSide.SELL, OrderType.LIMIT)
+    case1.add_first_stage(OrderStatus.ALL, 6.58, 1000, 10)
+    run_stages_in_case(case1)
+
+
 def run_mem_test_cases():
     print("------------- info --------------")
     result = client.info()
     print_result(result)
 
+    """
     sell_test_case1()
     buy_test_case1()
     sell_test_case2()
@@ -104,3 +120,7 @@ def run_mem_test_cases():
     buy_test_case6()
     sell_test_case7()
     buy_test_case7()
+    """
+    buy_test_case21()
+    buy_test_case22()
+    sell_test_case21()
