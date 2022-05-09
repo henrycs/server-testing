@@ -14,21 +14,6 @@ class MockServer:
 
     def load(self, case: str):
         url = self.url + '/load'
-        data = {"case": case}
-        result = post_json(url, params=data, headers=self.headers)
-        if result is None:
-            logger.error("load_case: failed to get response")
-            return False
-        
-        if result['status'] != 0:
-            logger.info(result['msg'])
-            return False
-        else:
-            logger.info(result['data'])
-            return True
-
-    def load_data(self, case: str):
-        url = self.url + '/load_data'
         result = post_json(url, params=case, headers=self.headers)
         if result is None:
             logger.error("load_case: failed to get response")

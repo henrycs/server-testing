@@ -13,7 +13,7 @@ token = "97be3f7c-e011-4859-8fd8-b15cebf5462a"
 client = TradeClient(url, acct, token)
 
 # init Mock server controller
-server_url = "http://192.168.100.202:9001/mock"
+server_url = "http://192.168.100.201:9002/mock"
 server_acct = 'mockserver'
 server_token = 'ec31c154fc0cbf4ba39eb48689ebcbfaacf8067f'
 server = MockServer(server_url, server_token, server_acct)
@@ -28,13 +28,14 @@ def mock_server_load_case(case: str):
     result = server.load(case)
     return result
 
-def mock_server_load_case_data(case: str):
-    result = server.reset()
-    if not result:
-        return False
+def mock_server_load_case_data(case: str, clear=True):
+    if clear:
+        result = server.reset()
+        if not result:
+            return False
 
     print(f"load case {case} ......")
-    result = server.load_data(case)
+    result = server.load(case)
     return result
 
 def mock_server_proceed():
