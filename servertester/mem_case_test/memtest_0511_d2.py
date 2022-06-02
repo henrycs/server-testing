@@ -29,8 +29,6 @@ def buy_test_case4():
     case1.add_first_stage(OrderStatus.ALL, 5.8, 1300, 12)
     run_stages_in_case(case1)
 
-
-
 def sell_test_case1():
     case1 = TestCase("600000.XSHG", 5.6, 500, OrderSide.SELL, OrderType.LIMIT)
     case1.add_first_stage(OrderStatus.ALL, 5.59, 500, 10)
@@ -83,9 +81,9 @@ def buy_test_case6():
 
 
 
-def run_mem_test_cases():
+def run_mem_test_cases(stage=1):
     print("------------- info --------------")
-    result = client.info()
+    result = client.basic_info()
     print_result(result)
 
     sell_test_case1()

@@ -61,7 +61,7 @@ def sell_test_case5():
 
 def run_mem_test_cases():
     print("------------- info --------------")
-    result = client.info()
+    result = client.basic_info()
     print_result(result)
 
     sell_test_case2()

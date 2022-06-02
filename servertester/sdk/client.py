@@ -9,7 +9,6 @@ from servertester.sdk.trade import OrderSide, OrderType
 
 logger = logging.getLogger(__name__)
 
-
 class TradeClient:
     def __init__(self, url: str, acct: str, token: str):
         """构建一个交易客户端
@@ -37,47 +36,18 @@ class TradeClient:
     def _cmd_url(self, cmd: str) -> str:
         return f"{self._url}/{cmd}"
 
-    def info(self) -> Dict:
+    def basic_info(self) -> Dict:
         """获取账户信息
 
         Returns:
             主要字段：账号名，当前资产，本金，最后一笔交易时间，交易笔数，账户创建时间
         """
-        url = self._cmd_url("info")
-        result = get(url, headers=self.headers)
-        if result is None:
-            logger.error("info: failed to get information")
+        url = self._cmd_url("basic_info")
+        try:
+            return get(url, headers=self.headers)
+        except Exception as e:
+            logger.error("info: failed to get information: %s", str(e))
             return None
-
-        return result
-
-    def balance(self) -> Dict:
-        """取该子账号对应的账户余额信息
-
-        Returns:
-            主要字段：参考盈亏，可用资金，股票市值，总资产，盈亏比例，子账户ID
-        """
-        url = self._cmd_url("balance")
-        result = get(url, headers=self.headers)
-        if result is None:
-            logger.error("balance: failed to get information")
-            return None
-
-        return result
-
-    def available_money(self) -> float:
-        """取当前之账户可用金额。策略函数可能需要这个数据进行仓位计算
-
-        Returns:
-            float: 账户可用资金
-        """
-        url = self._cmd_url("available_money")
-        result = get(url, headers=self.headers)
-        if result is None:
-            logger.error("available_money: failed to get information")
-            return None
-
-        return result
 
     def positions(self, dt: datetime.date = None) -> List:
         """取该子账户当前持仓信息
@@ -87,34 +57,15 @@ class TradeClient:
         Returns:
             List: 单个股票的信息为，代码，名称，总股数，可卖数，成本均价
         """
-        url = self._cmd_url("positions")
-        result = get(
-            url, params={"date": dt.strftime("%Y-%m-%d")}, headers=self.headers
-        )
-        if result is None:
-            logger.error("positions: failed to get information")
+        url = self._cmd_url("full_positions")
+        if dt is None:
+            dt = datetime.date.today()
+        datestr = dt.strftime("%Y-%m-%d")
+        try:
+            return get(url, params={"date": datestr}, headers=self.headers)
+        except Exception as e:
+            logger.error("positions: failed to get information, %s", str(e))
             return None
-
-        return result
-
-    def available_shares(self, security: str) -> int:
-        """返回某支股票当前可用数量
-
-        Args:
-            security : 股票代码
-
-        Returns:
-            int: 指定股票今日可卖数量，无可卖即为0
-        """
-        url = self._cmd_url("available_shares")
-        data = {"security": security}
-
-        result = post_json(url, params=data, headers=self.headers)
-        if result is None:
-            logger.error("positions: failed to get information")
-            return None
-
-        return result
 
     def today_entrusts(self) -> List:
         """查询账户当日所有委托，包括失败的委托
@@ -123,28 +74,11 @@ class TradeClient:
             List: 委托信息数组，字段参考buy
         """
         url = self._cmd_url("today_entrusts")
-
-        result = get(url, headers=self.headers)
-        if result is None:
-            logger.error("today_entrusts: failed to get information")
+        try:
+            return get(url, headers=self.headers)
+        except Exception as e:
+            logger.error("today_entrusts: failed to get information, %s", str(e))
             return None
-
-        return result
-
-    def today_trades(self) -> List:
-        """查询当日所有成交的委托
-
-        Returns:
-            List: 委托信息，参考buy的结果
-        """
-        url = self._cmd_url("today_trades")
-
-        result = get(url, headers=self.headers)
-        if result is None:
-            logger.error("today_trades: failed to get information")
-            return None
-
-        return result
 
     def stock_pool(self) -> List:
         """查询子账号的股票池
@@ -153,13 +87,11 @@ class TradeClient:
             List: 股票信息
         """
         url = self._cmd_url("stock_pool")
-
-        result = get(url, headers=self.headers)
-        if result is None:
-            logger.error("today_trades: failed to get information")
+        try:
+            return get(url, headers=self.headers)
+        except Exception as e:
+            logger.error("today_trades: failed to get information, %s", str(e))
             return None
-
-        return result
 
     def cancel_entrust(self, cid: str) -> Dict:
         """撤销委托
@@ -173,27 +105,11 @@ class TradeClient:
         url = self._cmd_url("cancel_entrust")
 
         data = {"cid": cid}
-        result = post_json(url, params=data, headers=self.headers)
-        if result is None:
-            logger.error("cancel_entrust: failed to get information")
+        try:
+            return post_json(url, params=data, headers=self.headers)
+        except Exception as e:
+            logger.error("cancel_entrust: failed to get information, %s", str(e))
             return None
-
-        return result
-
-    def cancel_all_entrusts(self) -> Dict:
-        """撤销当前所有未完成的委托，包括部分成交，不同交易系统实现不同
-
-        Returns:
-            Dict: 被撤的委托单信息，同buy
-        """
-        url = self._cmd_url("cancel_all_entrusts")
-
-        result = post_json(url, headers=self.headers)
-        if result is None:
-            logger.error("cancel_all_entrust: failed to get information")
-            return None
-
-        return result
 
     def buy(
         self, security: str, price: float, volume: int, timeout: float = 0.5, **kwargs
@@ -222,12 +138,11 @@ class TradeClient:
             **kwargs,
         }
 
-        result = post_json(url, params=parameters, headers=self.headers)
-        if result is None:
-            logger.error("buy: failed to get information")
+        try:
+            return post_json(url, params=parameters, headers=self.headers)
+        except Exception as e:
+            logger.error("buy: failed to get information, %s", str(e))
             return None
-
-        return result
 
     def market_buy(
         self,
@@ -267,12 +182,11 @@ class TradeClient:
         if limit_price is not None:
             parameters["limit_price"] = limit_price
 
-        result = post_json(url, params=parameters, headers=self.headers)
-        if result is None:
-            logger.error("market_buy: failed to get information")
+        try:
+            return post_json(url, params=parameters, headers=self.headers)
+        except Exception as e:
+            logger.error("market_buy: failed to get information, %s", str(e))
             return None
-
-        return result
 
     def sell(
         self, security: str, price: float, volume: int, timeout: float = 0.5, **kwargs
@@ -294,12 +208,11 @@ class TradeClient:
             **kwargs,
         }
 
-        result = post_json(url, params=parameters, headers=self.headers)
-        if result is None:
-            logger.error("sell: failed to get information")
+        try:
+            return post_json(url, params=parameters, headers=self.headers)
+        except Exception as e:
+            logger.error("sell: failed to get information, %s", str(e))
             return None
-
-        return result
 
     def market_sell(
         self,
@@ -331,143 +244,8 @@ class TradeClient:
         if limit_price is not None:
             parameters["limit_price"] = limit_price
 
-        result = post_json(url, params=parameters, headers=self.headers)
-        if result is None:
-            logger.error("market_sell: failed to get information")
+        try:
+            return post_json(url, params=parameters, headers=self.headers)
+        except Exception as e:
+            logger.error("market_sell: failed to get information, %s", str(e))
             return None
-
-        return result
-
-    def sell_percent(
-        self, security: str, price: float, percent: float, timeout: int = 0.5
-    ) -> Dict:
-        """按资产比例卖出特定的股票（基于可买股票数），比例的数字由调用者提供
-
-        Args:
-            security (str): 特定的股票代码
-            price (float): 市价卖出，价格参数可为0
-            percent (float): 调用者给出的百分比，(0, 1]
-            time_out (int, optional): 缺省超时为0.5秒
-
-        Returns:
-            Dict: 股票卖出委托单的详细信息，于sell指令相同
-        """
-        if percent <= 0 or percent > 1:
-            return None
-        if len(security) < 6:
-            return None
-
-        url = self._cmd_url("sell_percent")
-        parameters = {
-            "security": security,
-            "price": price,
-            "timeout": timeout,
-        }
-
-        result = post_json(url, params=parameters, headers=self.headers)
-        if result is None:
-            logger.error("sell_percent: failed to get information")
-            return None
-
-        return result
-
-    def sell_all(self, percent: float, timeout: float = 0.5) -> List:
-        """将所有持仓按percent比例进行减仓，用于特殊情况下的快速减仓（基于可买股票数）
-
-        Args:
-            percent (float): 调用者给出的百分比，(0, 1]
-            time_out (int, optional): 缺省超时为0.5秒
-
-        Returns:
-            List: 所有卖出股票的委托单信息，于sell指令相同
-        """
-        if percent <= 0 or percent > 1:
-            return None
-
-        url = self._cmd_url("sell_all")
-        parameters = {
-            "percent": percent,
-            "timeout": timeout,
-        }
-
-        result = post_json(url, params=parameters, headers=self.headers)
-        if result is None:
-            logger.error("sell_all: failed to get information")
-            return None
-
-        return result
-
-    def get_trades_in_range(self, start: datetime.date, end: datetime.date) -> List:
-        if start is None and end is not None:
-            logger.error("get_trades_in_range, start or end cannot be None")
-            return None
-        if start is not None and end is None:
-            logger.error("get_trades_in_range, start or end cannot be None")
-            return None
-        if start > end:
-            logger.error("get_trades_in_range, end is early than start!")
-            return None
-
-        url = self._cmd_url("get_trades_in_range")
-        parameters = {}
-        if start is not None:
-            parameters["start"] = start.strftime("%Y-%m-%d %H:%M:%S")
-        if end is not None:
-            parameters["end"] = end.strftime("%Y-%m-%d %H:%M:%S")
-
-        result = post_json(url, params=parameters, headers=self.headers)
-        if result is None:
-            logger.error("get_trades_in_range: failed to get information")
-            return None
-
-        return result
-
-    def get_entrusts_in_range(self, start: datetime.date, end: datetime.date) -> List:
-        if start is None and end is not None:
-            logger.error("get_entrusts_in_range, start or end cannot be None")
-            return None
-        if start is not None and end is None:
-            logger.error("get_entrusts_in_range, start or end cannot be None")
-            return None
-        if start > end:
-            logger.error("get_entrusts_in_range, end is early than start!")
-            return None
-
-        url = self._cmd_url("get_entrusts_in_range")
-        parameters = {}
-        if start is not None:
-            parameters["start"] = start.strftime("%Y-%m-%d %H:%M:%S")
-        if end is not None:
-            parameters["end"] = end.strftime("%Y-%m-%d %H:%M:%S")
-
-        result = post_json(url, params=parameters, headers=self.headers)
-        if result is None:
-            logger.error("get_entrusts_in_range: failed to get information")
-            return None
-
-        return result
-
-    def metrics(
-        self,
-        start: datetime.date = None,
-        end: datetime.date = None,
-        baseline: str = None,
-    ) -> Dict:
-        """获取指定时间段的账户指标评估数据
-
-        Args:
-            start :
-            end :
-            baseline: the security code for baseline
-
-        Returns:
-            _description_
-        """
-        url = self._cmd_url("metrics")
-        result = get(url, headers=self.headers, params={"baseline": baseline})
-        if result is None:
-            logger.error("info: failed to get information")
-            return None
-
-        return result["data"]
-

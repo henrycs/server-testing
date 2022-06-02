@@ -66,9 +66,9 @@ def buy_test_case10():
     run_stages_in_case(case1)
 
 
-def run_mem_test_cases():
+def run_mem_test_cases(stage=1):
     print("------------- info --------------")
-    result = client.info()
+    result = client.basic_info()
     print_result(result)
 
     buy_test_case1()

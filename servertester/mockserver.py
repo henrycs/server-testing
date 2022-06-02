@@ -17,23 +17,29 @@ class MockServer:
         result = post_json(url, params=case, headers=self.headers)
         if result is None:
             logger.error("load_case: failed to get response")
-            return False
+            return None
         
+        if result['status'] != 0:
+            logger.info(result['msg'])
+            return None
+        else:
+            logger.info(result['data'])
+            return result['data']
+
+    def proceed(self, caseid):
+        url = self.url + '/proceed'
+        params = {'case': caseid}
+        result = post_json(url, params=params, headers=self.headers)
+        if result is None:
+            logger.error("proceed: failed to get response")
+            return {'status': -1, 'msg': 'failed to get response'}
+
         if result['status'] != 0:
             logger.info(result['msg'])
             return False
         else:
             logger.info(result['data'])
-            return True
-
-    def proceed(self):
-        url = self.url + '/proceed'
-        result = get(url, params=None, headers=self.headers)
-        if result is None:
-            logger.error("proceed: failed to get response")
-            return {'status': -1, 'msg': 'failed to get response'}
-
-        return result        
+            return result['data']
 
 
     def reset(self):

@@ -18,12 +18,12 @@ def load_case(case):
 
    
 def buy_test_case1():
-    case1 = TestCase("600000.XSHG", 5.2, 1000, OrderSide.BUY, OrderType.LIMIT)
+    case1 = TestCase("600000.XSHG", 15.2, 1000, OrderSide.BUY, OrderType.LIMIT)
     case1.add_first_stage(OrderStatus.ALL, 5.16, 1000, 11.22)
     load_case(case1)
 
 def buy_test_case2():
-    case1 = TestCase("601138.XSHG", 5.8, 1200, OrderSide.BUY, OrderType.MARKET)
+    case1 = TestCase("601138.XSHG", 15.8, 1200, OrderSide.BUY, OrderType.MARKET)
     case1.add_first_stage(OrderStatus.ALL, 5.77, 1200, 20)
     load_case(case1)
 
@@ -40,6 +40,13 @@ def sell_test_case1():
     case1.add_first_stage(OrderStatus.ALL, 5.58, 1000, 10)
     load_case(case1)
 
+def buy_test_case9():
+    case1 = TestCase("601118.XSHG", 6.99, 2000, OrderSide.BUY, OrderType.LIMIT)
+    case1.add_first_stage(OrderStatus.NO_DEAL, 0, 0, 0)
+    case1.add_stage(TestAction.CANCEL, OrderStatus.NO_DEAL, 0, 0, 0)
+    case1.add_stage(TestAction.UPDATE, OrderStatus.CANCEL, 6.8, 1000, 10.23)
+    load_case(case1)
+
 def run_mem_test_cases():
-    buy_test_case3()
-    #buy_test_case2()
+    buy_test_case2()
+

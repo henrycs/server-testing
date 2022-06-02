@@ -84,11 +84,6 @@ def buy_test_case7():
 
 
 
-
-def buy_test_case21():
-    case1 = TestCase("600519.XSHG", 1828.38, 300, OrderSide.BUY, OrderType.MARKET)
-    case1.add_first_stage(OrderStatus.ALL, 1828.0, 300, 1330.1)
-    run_stages_in_case(case1)
 def buy_test_case22():
     case1 = TestCase("600519.XSHG", 1828.38, 200, OrderSide.BUY, OrderType.MARKET)
     case1.add_first_stage(OrderStatus.ALL, 1823.0, 200, 2330.1)
@@ -99,28 +94,35 @@ def sell_test_case21():
     case1.add_first_stage(OrderStatus.ALL, 6.58, 1000, 10)
     run_stages_in_case(case1)
 
+def buy_test_case21():
+    case1 = TestCase("600519.XSHG", 1828.38, 300, OrderSide.BUY, OrderType.MARKET)
+    case1.add_first_stage(OrderStatus.ALL, 1828.0, 300, 1330.1)
+    run_stages_in_case(case1)
 
-def run_mem_test_cases():
+
+def run_mem_test_cases(stage=1):
     print("------------- info --------------")
-    result = client.info()
+    result = client.basic_info()
     print_result(result)
 
-    """
-    sell_test_case1()
-    buy_test_case1()
-    sell_test_case2()
-    buy_test_case2()
-    sell_test_case3()
-    buy_test_case3()
-    sell_test_case4()
-    buy_test_case4()
+    if stage == 1:
+        sell_test_case1()
+        buy_test_case1()
+        sell_test_case2()
+        buy_test_case2()
+        sell_test_case3()
+        buy_test_case3()
+        sell_test_case4()
+        buy_test_case4()
 
-    buy_test_case5()
-    sell_test_case6()
-    buy_test_case6()
-    sell_test_case7()
-    buy_test_case7()
-    """
-    buy_test_case21()
-    buy_test_case22()
-    sell_test_case21()
+        buy_test_case5()
+        sell_test_case6()
+        buy_test_case6()
+        sell_test_case7()
+        buy_test_case7()
+
+        buy_test_case22()
+    elif stage == 2:    
+        sell_test_case21()
+    else:
+        buy_test_case21()
