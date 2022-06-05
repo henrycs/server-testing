@@ -1,6 +1,7 @@
 import logging
 #from servertester.mem_case_test.memtest_0512_d3 import run_mem_test_cases
-from servertester.xd_xr.xdxr_0512_d2 import run_mem_test_cases
+#from servertester.xd_xr.xdxr_0512_d2 import run_mem_test_cases
+from servertester.casetest.singlecase import run_mem_test_cases
 
 
 logger = logging.getLogger(__name__)
