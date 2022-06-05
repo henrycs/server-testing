@@ -7,16 +7,21 @@ logger = logging.getLogger(__name__)
 
 
 # init Trade Client
-#url = "http://192.168.100.202:8000/api/trade/v0.1"
-url = "http://192.168.1.201:8000/api/trade/v0.1"
 acct = "henry"
+
+url = "http://192.168.100.202:8000/api/trade/v0.1"
 #token = "f1a055f7-cba3-42fc-89e7-791c97603eaa"
-token = "3fce4dc5-0fce-4e04-81c5-d84848a157b7"
+token = "bb47c00a-7b82-4a47-bb47-77df23505a4d"  # for xrxd test
+
+#url = "http://192.168.1.201:8000/api/trade/v0.1"
+#token = "3fce4dc5-0fce-4e04-81c5-d84848a157b7"
+
 client = TradeClient(url, acct, token)
 
 # init Mock server controller
-#server_url = "http://192.168.100.202:9001/mock"
-server_url = "http://192.168.1.201:9000/mock"
+server_url = "http://192.168.100.202:9000/mock"
+#server_url = "http://192.168.1.201:9000/mock"
+
 server_acct = 'mockserver'
 server_token = 'ec31c154fc0cbf4ba39eb48689ebcbfaacf8067f'
 server = MockServer(server_url, server_token, server_acct)

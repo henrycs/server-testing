@@ -54,38 +54,38 @@ def sell_test_case4():
 
 
 def sell_test_case5():
-    case1 = TestCase("000803.XSHE", 4.6, 1300, OrderSide.SELL, OrderType.LIMIT)
-    case1.add_first_stage(OrderStatus.ALL, 4.62, 1300, 10)
+    case1 = TestCase("300037.XSHE", 39.5, 1300, OrderSide.SELL, OrderType.LIMIT)
+    case1.add_first_stage(OrderStatus.ALL, 39.56, 1300, 10)
     run_stages_in_case(case1)
 
 def sell_test_case6():
-    case1 = TestCase("601156.XSHG", 9.51, 1560, OrderSide.SELL, OrderType.MARKET)
-    case1.add_first_stage(OrderStatus.ALL, 9.53, 1560, 22.2)
+    case1 = TestCase("002465.XSHE", 9.15, 900, OrderSide.SELL, OrderType.MARKET)
+    case1.add_first_stage(OrderStatus.ALL, 9.15, 900, 22.2)
     run_stages_in_case(case1)
 
 def buy_test_case5():
-    case1 = TestCase("601156.XSHG", 9.45, 1800, OrderSide.BUY, OrderType.MARKET)
-    case1.add_first_stage(OrderStatus.PARTIAL, 9.42, 1000, 12.3)
-    case1.add_stage(TestAction.UPDATE, OrderStatus.PARTIAL, 9.41, 1200, 13.45)
-    case1.add_stage(TestAction.UPDATE, OrderStatus.ALL, 9.40, 1800, 15.2)
+    case1 = TestCase("002465.XSHE", 9.18, 1800, OrderSide.BUY, OrderType.MARKET)
+    case1.add_first_stage(OrderStatus.PARTIAL, 9.17, 1000, 12.3)
+    case1.add_stage(TestAction.UPDATE, OrderStatus.PARTIAL, 9.16, 1200, 13.45)
+    case1.add_stage(TestAction.UPDATE, OrderStatus.ALL, 9.16, 1800, 15.2)
     run_stages_in_case(case1)
 
 def buy_test_case6():
-    case1 = TestCase("301073.XSHE", 6.99, 1600, OrderSide.BUY, OrderType.LIMIT)
+    case1 = TestCase("600989.XSHG", 14.03, 1600, OrderSide.BUY, OrderType.LIMIT)
     case1.add_first_stage(OrderStatus.NO_DEAL, 0, 0, 0)
-    case1.add_stage(TestAction.UPDATE, OrderStatus.ALL, 9.40, 1600, 15.2)
+    case1.add_stage(TestAction.UPDATE, OrderStatus.ALL, 14.02, 1600, 15.2)
     run_stages_in_case(case1)
 
 def sell_test_case7():
-    case1 = TestCase("002443.XSHE", 9.51, 3000, OrderSide.SELL, OrderType.MARKET)
-    case1.add_first_stage(OrderStatus.ALL, 9.53, 3000, 22.2)
+    case1 = TestCase("603078.XSHG", 24.51, 3000, OrderSide.SELL, OrderType.MARKET)
+    case1.add_first_stage(OrderStatus.ALL, 24.55, 3000, 22.2)
     run_stages_in_case(case1)
 
 def buy_test_case7():
-    case1 = TestCase("002443.XSHE", 9.45, 1800, OrderSide.BUY, OrderType.MARKET)
-    case1.add_first_stage(OrderStatus.PARTIAL, 9.42, 1000, 12.3)
-    case1.add_stage(TestAction.UPDATE, OrderStatus.PARTIAL, 9.41, 1200, 13.45)
-    case1.add_stage(TestAction.UPDATE, OrderStatus.ALL, 9.40, 1800, 15.2)
+    case1 = TestCase("603078.XSHG", 24.6, 1800, OrderSide.BUY, OrderType.MARKET)
+    case1.add_first_stage(OrderStatus.PARTIAL, 24.6, 1000, 12.3)
+    case1.add_stage(TestAction.UPDATE, OrderStatus.PARTIAL, 24.55, 1200, 13.45)
+    case1.add_stage(TestAction.UPDATE, OrderStatus.ALL, 24.5, 1800, 15.2)
     run_stages_in_case(case1)
 
 
