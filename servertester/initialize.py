@@ -10,8 +10,8 @@ logger = logging.getLogger(__name__)
 acct = "henry"
 
 url = "http://192.168.100.202:8000/api/trade/v0.1"
-#token = "5524c9a6-ef77-44ac-9a5f-584b9f8e502e"  # 202, normal cases, 0510-0512
-token = "bb47c00a-7b82-4a47-bb47-77df23505a4d"  # for xrxd test
+token = "5524c9a6-ef77-44ac-9a5f-584b9f8e502e"  # 202, normal cases, 0510-0512
+#token = "bb47c00a-7b82-4a47-bb47-77df23505a4d"  # for xrxd test
 
 #url = "http://192.168.1.201:8000/api/trade/v0.1"
 #token = "3fce4dc5-0fce-4e04-81c5-d84848a157b7"
